@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require('fs');
 // const generatePage = require('./page-template.js');
 // const pageHTML = generatePage(userName, github);
+
 const pictureSelector =(icon) =>{
 if(icon=='Manager') {
     return `![icon:'Manager']("iconify" data-icon="logos:coffeescript" data-inline="false")`
@@ -19,7 +20,14 @@ const employeeTitle =(position) =>{
     } else if(position=='Intern'){
         return `("Intern")`
     }
-    }
+}
+const projectName = (githubUrl) => {
+    if (githubUrl=="Bachelors Software Engineer") {
+        return '[![githubUrl: Bachelors Software Engineer](https://patrena94.github.io/Multi-City-Weather-Dashboard/)]';
+    } else if(githubUrl=='Master Software Engineer') {
+       return '[![githubUrl: Master Software Engineer](https://patrena94.github.io/Smith-Corporation-Work-Scheduler/)]';
+}
+}
 const generatePage = (userName, githubName) => { 
 return `
 <!DOCTYPE html>
@@ -39,8 +47,7 @@ return `
 </head>
 
 <body>       
-            <section class="container-fluid" id="5DayContainer">
-                <h2> 5-Day forecast:</h2>
+            <section class="container-fluid">
                 <div class="row">
             <div class="col-sm-4">
             <div class="card" style="width: 18rem;">
@@ -184,96 +191,129 @@ const promptUser = () => {
         }
       },
       {
+          type: 'input',
+          name: 'Emaillink',
+          message: 'enter your email address',
+          validate: EmailLinkInput =>{
+              if (EmailLinkInput){
+                  return true;
+              }else {
+                  console.log('please enter email address');
+              }
+              }
+          },
+          {
+            type: 'input',
+            name: 'officeNumber',
+            message: 'enter your email address',
+            validate: officeNumberInput =>{
+                if (officeNumberInput){
+                    return true;
+                }else {
+                    console.log('please enter email address');
+                }
+                }
+            },
+            {
+                type: 'checkbox',
+                name: 'educationLevel',
+                message: 'What position does this employee occupy?',
+                choices: ['Intern', 'Bachelors Software Engineer', 'Master Software Engineer'],
+              },  
+              
+              {
+                  type: 'input',
+                  name: 'University',
+                  message: 'What university did the employee attend?',
+                  validate: (UniversityInput) => {
+                      if(UniversityInput) {
+                          return true;
+                      } else {
+                          console.log('Is the employee an Intern!');
+                      }
+                      }
+                  },
+
+      {
         type: 'checkbox',
         name: 'position',
         message: 'What position does this employee occupy?',
         choices: ['Manager', 'Engineer', 'Intern'],
+      },
+      {
+        type: 'input',
+        name: 'projectTitle',
+        message: 'What is the name of your project? (Required)',
+        validate: projectTitleInput => {
+          if (projectTitleInput) {
+            return true;
+          } else {
+            console.log('You need to enter a project title!');
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'ID',
+        message: 'Please provide an ID for the employee!',
+        validate: IDInput => {
+          if (IDInput) {
+            return true;
+          } else {
+            console.log('please provide an ID for the employee!');
+            return false;
+          }
+        }
+    },
+      {
+        type: 'input',
+        name: 'link',
+        message: 'Enter the GitHub link to your project. (Required)',
+        validate: linkInput => {
+          if (linkInput) {
+            return true;
+          } else {
+            console.log('You need to enter a project GitHub link!');
+            return false;
+          }
+        }
+      },
+      {
+        type: 'confirm',
+        name: 'confirmAddProject',
+        message: 'Would you like to enter another project?',
+        default: false
       }
     ]);
   };
   
-  const promptEmployee = EmployeeData => {
-    console.log(`
-  =================
-  Add a New Employee
-  =================
-  `);
   
-    // If there's no 'employee' array property, create one
-    if (!portfolioData.projects) {
-      portfolioData.projects = [];
-    }
-    return inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'projectTitle',
-          message: 'What is the name of your project? (Required)',
-          validate: projectTitleInput => {
-            if (projectTitleInput) {
-              return true;
-            } else {
-              console.log('You need to enter a project title!');
-              return false;
-            }
-          }
-        },
-        {
-          type: 'input',
-          name: 'ID',
-          message: 'Please provide an ID for the employee!',
-          validate: IDInput => {
-            if (descriptionInput) {
-              return true;
-            } else {
-              console.log('please provide an ID for the employee!');
-              return false;
-            }
-          }
-        },
-        {
-          type: 'checkbox',
-          name: 'languages',
-          message: 'What did you this project with? (Check all that apply)',
-          choices: ['JavaScript', 'HTML', 'CSS', 'ES6', 'jQuery', 'Bootstrap', 'Node']
-        },
-        {
-          type: 'input',
-          name: 'link',
-          message: 'Enter the GitHub link to your project. (Required)',
-          validate: linkInput => {
-            if (linkInput) {
-              return true;
-            } else {
-              console.log('You need to enter a project GitHub link!');
-              return false;
-            }
-          }
-        },
-        {
-          type: 'confirm',
-          name: 'feature',
-          message: 'Would you like to feature this project?',
-          default: false
-        },
-        {
-          type: 'confirm',
-          name: 'confirmAddProject',
-          message: 'Would you like to enter another project?',
-          default: false
-        }
-      ])
-      .then(employeeData => {
-        employeeData.projects.push(employeeData);
-        if (employeeData.confirmAddemployee) {
-          return promptProject(employeeData);
-        } else {
-          return employeeData;
-        }
-      });
-  };
+//   const promptEmployee = EmployeeData => {
+//     console.log(`
+//   =================
+//   Add a New Employee
+//   =================
+//   `);
+  
+    // // If there's no 'employee' array property, create one
+    // if (!portfolioData.projects) {
+    //   portfolioData.projects = [];
+    // }
+    // return inquirer
+    //   .prompt([
+   
+    //   ])
+    //   .then(employeeData => {
+    //     employeeData.projects.push(employeeData);
+    //     if (employeeData.confirmAddemployee) {
+    //       return promptProject(employeeData);
+    //     } else {
+    //       return employeeData;
+    //     }
+    //   });
   promptUser()
-   . then(answer => {
+   .then(answers => {
         console.log(answers)
       const pageHTML = generatePage(answers);
   
@@ -282,5 +322,5 @@ const promptUser = () => {
   
         console.log('Page created! Check out index.html in this directory to see it!');
       });
+    //   promptUser()
     });
-    
