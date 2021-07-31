@@ -1,5 +1,18 @@
 const inquirer = require("inquirer");
 const fs = require('fs');
+const promptforEmployeeData =async()=>{
+    const responses = await inquierer.prompt([
+        {type: 'input',
+    name: 'empNam',
+message: "enter the new employee's name",
+,}
+    ])
+    .then(responses)=> {
+        console.log("logging responses rom inquiias", response)
+        return rsponses;
+    });
+};
+module.exports = Employees;
 // const generatePage = require('./page-template.js');
 // const pageHTML = generatePage(userName, github);
 
@@ -9,7 +22,7 @@ if(icon=='Manager') {
 } else if(icon=='Engineer'){
     return `("iconify" data-icon="bi:eyeglasses" data-inline="false")`
 } else if(icon=='Intern'){
-    return `("iconify" data-icon="bi:eyeglasses" data-inline="false")`
+    return `![icon: 'intern']("iconify" data-icon="bi:eyeglasses" data-inline="false")`
 }
 }
 const employeeTitle =(position) =>{
@@ -171,22 +184,6 @@ const promptUser = () => {
           
 
      
-      {
-        type: 'input',
-        name: 'projectTitle',
-        message: 'What is the name of your project? (Required)',
-        validate: projectTitleInput => {
-          if (projectTitleInput) {
-            return true;
-          } else {
-            console.log('You need to enter a project title!');
-            return false;
-          }
-        }
-      },
-     
-    ]);
-  };
   
   
 //   const promptEmployee = EmployeeData => {
