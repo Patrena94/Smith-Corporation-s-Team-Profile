@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const { array } = require("yargs");
 const Employees = [];
 
 const promptUser = () => {
@@ -13,20 +14,20 @@ const promptUser = () => {
               if (projectNameInput) {
                 return true;
               } else {
-                console.log('You need to enter a project Name!');
+                console.log('You need to enter a project title!');
                 return false;
               }
             }
           },
       {
-        type: "input",
-        name: "EmployeeName",
-        message: "Please provide employee name?(required)",
-        validate: (EmployeeNameInput) => {
-          if (EmployeeNameInput) {
+        type: 'input',
+        name: 'employeeName',
+        message: 'Who is the employee?(required)',
+        validate: employeeNameInput => {
+          if (employeeNameInput) {
             return true;
           } else {
-            console.log("Please enter the employee name?");
+            console.log("Please enter the employee's name?");
             return false;
           }
         },
@@ -45,11 +46,11 @@ const promptUser = () => {
         },
       },
       {
-        type: "input",
-        name: "Emaillink",
+        type: "link",
+        name: "Email",
         message: "enter your email address",
-        validate: (EmailLinkInput) => {
-          if (EmailLinkInput) {
+        validate: (EmailLink) => {
+          if (EmailLink) {
             return true;
           } else {
             console.log("please enter email address");
@@ -57,16 +58,17 @@ const promptUser = () => {
         },
       },
       {
-        type: "checkbox",
-        name: "educationLevel",
-        message: "What position does this employee occupy?",
-        choices: [
-          "Intern",
-          "Bachelors Software Engineer",
-          "Master Software Engineer",
-        ],
+        type: "number",
+        name: "phone",
+        message: "What is the employees phone number?",
+        validate:(phoneNumber)=> {
+        if (phoneNumber){
+            return true;
+        // } else {
+        //     console.log("what is the employee's phone number!")
+        }
+    }
       },
-
       {
         type: "input",
         name: "University",
@@ -99,19 +101,19 @@ const promptUser = () => {
         },
       },
 
-      {
-        type: "input",
-        name: "link",
-        message: "Enter the GitHub link to your project. (Required)",
-        validate: (linkInput) => {
-          if (linkInput) {
-            return true;
-          } else {
-            console.log("You need to enter a project GitHub link!");
-            return false;
-          }
-        },
-      },
+    //   {
+    //     type: "input",
+    //     name: "link",
+    //     message: "Enter the GitHub link to your project. (Required)",
+    //     validate: (linkInput) => {
+    //       if (linkInput) {
+    //         return true;
+    //       } else {
+    //         console.log("You need to enter a project GitHub link!");
+    //         return false;
+    //       }
+    //     },
+    //   },
 
       {
         type: "confirm",
@@ -127,6 +129,8 @@ const promptUser = () => {
       } else {
         Employees.push(answers);
         //   loop in employees
+        for(const i = 0; i < Employees.length; i++){
+        Employees(data)+=`$[obj[i]`}
         console.log(Employees);
         return Employees;
       }
@@ -191,131 +195,150 @@ const pictureSelector = (icon) => {
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
           <link rel="stylesheet" href="./assets/style.css" />
           <h1 class ="text-center">
-              <title>Smith Corporation's Team Profile</title>
-              <span class ="oi oi-task d-inline d-lg-none"></span>Smit Corporation's Team Profile</h1>
+              <title>Smith Corporation Team Profile</title>
+              <span class ="oi oi-task d-inline d-lg-none"></span>Smith Corporation Team Profile</h1>
       </head>  
       <body>    
-                  <div class="Manager">
+                  <div class = "container"
                       <div class="row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
+                  <div class="Manager">
+                  <div class="card-deck">
                   <div class="card" style="width: 18rem;">
-                  <h5 class="card-title">${obj[0].EmployeeName}</h5>
+                  <div class="card-body">
+                  <h5 class="card-title">${obj[0].employeeName}</h5>
                   <p class="card-text"><span class=${obj[0].icon}></span>${obj[0].position}</p>
                 </div>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${obj[0].ID}</li>
-                    <li class="list-group-item">Email: ${obj[0].EmailLink}</li>
-                    <li class="list-group-item">Phone Number: ${obj[0].officeNumber}</li>
+                    <li class="list-group-item">Email: ${obj[0].Email}</li>
+                    <li class="list-group-item">Phone Number: ${obj[0].phone}</li>
                     <li class="list-group-item">Education: ${obj[0].University}</li>
-                  </ul>
-                  <div class="card-body">
-              <a href="#" class="card-link">${obj[0].projectName}</a>
-              <a href="#" class="card-link">${obj[0].githubUrl}</a>
+                    </ul>
+                    <class="card-footer">
+                    <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj[0].projectName}</a><br>
+                    <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a></li>
+              
                 </div>
                       </div>
                   </div>
-                  <form>
-    <div class="form-group">
-      <label from="exampleFormControlInput1">From</label>
-      <input type="email" class="form-control" id="${obj[0].EmailLink}" placeholder="name@example.com">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlSelect1">Example select</label>
-      <input type="email" class="form-control"  id="exampleFormControlInput1" placeholder="name@example.com">
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-  </form>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
+                  <div class="Engineer">
+                  <div class="card-deck>
                   <div class="card" style="width: 18rem;">
-                  <h5 class="card-title">${obj[1].EmployeeName}</h5>
-                  <p class="card-text"><span class=${obj[1].icon}></span>${obj[1].position}</p>
+                  <div class="card-body">
+                  <h5 class="card-title">${obj[0].employeeName}</h5>
+                  <p class="card-text"><span class=${obj[0].icon}></span>${obj[0].position}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${obj[1].ID}</li>
-                <li class="list-group-item">Email: ${obj[1].EmailLink}</li>
-                <li class="list-group-item">Phone Number: ${obj[1].officeNumber}</li>
-                <li class="list-group-item">Education: ${obj[1].University}</li>
-              </ul>
-              <div class="card-body">
-          <a href="#" class="card-link">${obj[1].projectName}</a>
-          <a href="#" class="card-link">${obj[1].githubUrl}</a>
+                <li class="list-group-item">ID: ${obj[0].ID}</li>
+                <li class="list-group-item">Email: ${obj[0].Email}</li>
+                <li class="list-group-item">Phone Number:${obj[0].phone}</li>
+                <li class="list-group-item">Education: ${obj[0].University}</li>
+                </ul>
+                <class="card-footer">
+             <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj.projectName}</a><br>
+             <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a>
                 </div>
                          </div>
                   </div>
+                  <div class="col-sm-3">
                   <div class="Engineer">
-                  <div class="col-sm-4">
+                  <div class="card-deck>
                   <div class="card" style="width: 18rem;">
-                  <h5 class="card-title">${obj[2].EmployeeName}</h5>
-                  <p class="card-text"><span class=${obj[2].icon}></span>${obj[2].position}</p>
+                  <div class="card-body">
+                  <h5 class="card-title">${obj.engineerName}</h5>
+                  <p class="card-text"><span class=${obj.icon}></span>${obj.position}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${obj[2].ID}</li>
-                <li class="list-group-item">Email: ${obj[2].EmailLink}</li>
-                <li class="list-group-item">Phone Number: ${obj[2].officeNumber}</li>
-                <li class="list-group-item">Education: ${obj[2].University}</li>
+                <li class="list-group-item">ID: ${obj.ID}</li>
+                <li class="list-group-item">Email: ${obj.Email}</li>
+                <li class="list-group-item">Phone Number: ${obj.phone}</li>
+                <li class="list-group-item">Education: ${obj.University}</li>
+                </ul>
+                <class="card-footer">
+                <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj[0].projectName}</a><br>
+                <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a>
               </ul>
-              <div class="card-body">
-          <a href="#" class="card-link">${obj[2].projectName}</a>
-          <a href="#" class="card-link">${obj[2].githubUrl}</a>
                 </div>
-                  </div>
-                  <div class="Engineer">
+                  </div> 
+                  <div class=containertwo> 
                   <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-3">
+              <div class="Engineer">
+              <div class="card-deck>
               <div class="card" style="width: 18rem;">
-              <h5 class="card-title">${obj[3].EmployeeName}</h5>
-                  <p class="card-text"><span class="iconify" data-icon="bi:eyeglasses" data-inline="false"></span>${obj[3].position}</p>
+              <div class ="card-body">
+              <h5 class="card-title">${obj.engineerName}</h5>
+                  <p class="card-text"><span class="iconify" data-icon="bi:eyeglasses" data-inline="false"></span>${obj.position}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${obj[3].ID}</li>
-                <li class="list-group-item">Email: ${obj[3].EmailLink}</li>
-                <li class="list-group-item">Phone Number: ${obj[3].officeNumber}</li>
-                <li class="list-group-item">Education: ${obj[3].University}</li>
-              </ul>
-              <div class="card-body">
-          <a href="#" class="card-link">${obj[3].projectName}</a>
-          <a href="#" class="card-link">${obj[3].githubUrl}</a>
-            </div>
+                <li class="list-group-item">ID: ${obj.ID}</li>
+                <li class="list-group-item">Email: ${obj.Email}</li>
+                <li class="list-group-item">Phone Number: ${obj.phoneNumber}</li>
+                <li class="list-group-item">Education: ${obj.University}</li>
+                </ul>
+                <class="card-footer">
+                <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj[0].projectName}</a><br>
+                <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a>
+              
                   </div>
               </div>
               <div class="Engineer">
-                  <div class="col-sm-4">
-                  <div class="card" style="width: 18rem;">
-                  <h5 class="card-title">${obj[4].EmployeeName}</h5>
-                  <p class="card-text"><span class="iconify" data-icon="bi:eyeglasses" data-inline="false"></span>${obj[4].position}</p>
+                  <div class="col-sm-3">
+                  <div class="card-deck>
+                  <div class="cardA" style="width: 18rem;">
+                  <div class="card-body">
+                  <h5 class="card-title">${obj.engineerName}</h5>
+                  <p class="card-text"><span class="iconify" data-icon="bi:eyeglasses" data-inline="false"></span>${obj.position}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${obj[4].ID}</li>
-                    <li class="list-group-item">Email: ${obj[4].EmailLink}</li>
-                    <li class="list-group-item">Phone Number: ${obj[4].officeNumber}</li>
-                    <li class="list-group-item">Education: ${obj[4].University}</li>
-                  </ul>
-                  <div class="card-body">
-              <a href="#" class="card-link">${obj[4].projectName}</a>
-              <a href="#" class="card-link">${obj[4].githubUrl}</a>
+                    <li class="list-group-item">ID: ${obj.ID}</li>
+                    <li class="list-group-item">Email: ${obj.Email}</li>
+                    <li class="list-group-item">Phone Number: ${obj.phone}</li>
+                    <li class="list-group-item">Education: ${obj.University}</li>
+                    </ul>
+                    <class="card-footer">
+                   <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj[0].projectName}</a><br>
+                   <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a>
                 </div>
                   </div>
+                  </div>
                   <div class="Intern"
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
+                  <div class="card-deck>
                   <div class="card" style="width: 18rem;">
-                  <h5 class="card-title">${obj[5].EmployeeName}</h5>
-                  <p class="card-text"><span class="iconify" data-icon="ph:student-duotone" data-inline="false"></span>${obj[5].position}</p>
+                  <div class="card-body">
+                  <h5 class="card-title">${obj.internName}</h5>
+                  <p class="card-text"><span class="iconify" data-icon="ph:student-duotone" data-inline="false"></span>${obj.position}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${obj[5].ID}</li>
-                <li class="list-group-item">Email: ${obj[5].EmailLink}</li>
-                <li class="list-group-item">Phone Number: ${obj[5].officeNumber}</li>
-                <li class="list-group-item">Education: ${obj[5].University}</li>
-              </ul>
-              <div class="card-body">
-          <a href="#" class="card-link">${obj[5].projectName}</a>
-          <a href="#" class="card-link">${obj[5].githubUrl}</a>
+                <li class="list-group-item">ID: ${obj.ID}</li>
+                <li class="list-group-item">Email: ${obj.Email}</li>
+                <li class="list-group-item">Phone Number: ${obj.phone}</li>
+                <li class="list-group-item">Education: ${obj.University}</li>
+                </ul>
+                <a href="#" class="card-link">Project: https://${obj[0].github}github.io/${obj[0].projectName}</a><br>
+                <a href="#" class="card-link">Github: https://github.com/${obj[0].github}</a>
                 </div>
                       </div>
+                      </div>
+                      </div>
+                      <form>
+                      <div class="form-group">
+                        <label from="exampleFormControlInput1">From</label>
+                        <input type="email" class="form-control" id="${obj.Email}" placeholder="name@example.com">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        <input type="email" class="form-control"  id="exampleFormControlInput1" placeholder="name@example.com">
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                    </form>
                   </div>
               </div>
                   </section>

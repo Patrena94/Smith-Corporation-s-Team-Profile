@@ -5,4 +5,17 @@ h1 {
     font-weight: bold;
     font-size: x-large;
 }
+.card {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around;
+    
+}
+
+.card-body {
+    background-color:blue;
+    color: black;
+ }
+ 
 
