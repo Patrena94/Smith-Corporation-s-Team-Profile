@@ -5,17 +5,54 @@ h1 {
     font-weight: bold;
     font-size: x-large;
 }
-.card {border: solid black;
+.Managercard {border: solid black;
     padding-bottom: 25px;
     align-self: baseline;
     display: flexbox;
-    justify-content: space-around;
     
+}
+.Engineercard {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    /* justify-content: space-around;    */
+}
+
+.Engineer1card {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around;   
+}
+.Engineer2card {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around;   
+}
+.Engineer3card {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around;   
+}
+.Interncard {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around;   
+}
+.card-deck {display: flex;
+flex-wrap: wrap;
+padding: 50px;
+justify-content: space-evenly;
 }
 
 .card-body {
     background-color:blue;
     color: black;
  }
- 
+ .col-sm-4 {justify-content:space-evenly;}
+
+ .iconify {size: 25px;}
 
