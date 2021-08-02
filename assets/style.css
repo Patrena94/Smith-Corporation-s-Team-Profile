@@ -54,5 +54,17 @@ justify-content: space-evenly;
  }
  .col-sm-4 {justify-content:space-evenly;}
 
+ .form {border: solid red;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around; 
+}
+.form-group {border: solid black;
+    padding-bottom: 25px;
+    align-self: baseline;
+    display: flexbox;
+    justify-content: space-around; 
+}
  .iconify {size: 25px;}
 
